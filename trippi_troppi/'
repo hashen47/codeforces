@@ -1,0 +1,131 @@
+package main
+
+import (
+	"os"
+	"fmt"
+	"bufio"
+	"strconv"
+	"strings"
+)
+
+func main() {
+	s := bufio.NewScanner(os.Stdin)
+
+	s.Scan()
+	rounds, _ := strconv.Atoi(s.Text())
+
+	for i := 0; i < rounds; i++ {
+		s.Scan()
+		numbers := make([]int, 0)
+
+		for _, str := range strings.Split(s.Text(), " ") {
+			n, _ := strconv.Atoi(str)
+			numbers = append(numbers, n)
+		}
+
+		rows := numbers[0]
+		cols := numbers[1] 
+		a := numbers[2]-1 // row
+		b := numbers[3]-1 // col
+		grid := make([][]int, 0)
+
+		for y := 0; y < rows; y++ {
+			row := make([]int, 0)
+			for x := 0; x < cols; x++ {
+				row = append(row, 0)
+			}
+			grid = append(grid, row)
+		}
+
+		grid[a][b] = 1 // place the monster
+		// moufTurn := true
+
+		moufTurn := true
+		count := 0
+		direction := "top"
+		for {
+			max := -1 
+			if rows == 1 && cols == 1 {
+				break
+			}
+
+			rowsDiff := rows-1-a 
+			colsDiff := cols-1-b
+
+			if rowsDiff >= max {
+				direction = "bottom"
+				max = rowsDiff
+			}
+
+			if a >= max {
+				direction = "top"
+				max = a
+			}
+			
+			if colsDiff >= max {
+				direction = "right"
+				max = colsDiff
+			}
+
+			if b >= max {
+				direction = "left"
+				max = b
+			}
+
+			if moufTurn {
+				switch direction {
+				case "top":
+					grid[a][b] = 0
+					rows = rowsDiff+1
+					a = 0
+					grid[a][b] = 1
+				case "bottom":
+					grid[a][b] = 0
+					rows = a+1 
+					grid[a][b] = 1
+				case "left":
+					grid[a][b] = 0
+					cols = colsDiff+1 
+					b = 0
+					grid[a][b] = 1
+				case "right":
+					grid[a][b] = 0
+					cols = b+1
+					grid[a][b] = 1
+				}
+			} else {
+				switch direction {
+				case "top":
+					grid[a][b] = 0
+					if a != 0 {
+						a--
+					}
+					grid[a][b] = 1
+				case "bottom":
+					grid[a][b] = 0
+					if a != rows-1 {
+						a++
+					}
+					grid[a][b] = 1
+				case "left":
+					grid[a][b] = 0
+					if b != 0 {
+						b--
+					}
+					grid[a][b] = 1
+				case "right":
+					grid[a][b] = 0
+					cols = b+1
+					grid[a][b] = 1
+				}
+			}
+
+			fmt.Printf("turn: %s, a: %d, b: %d, rows: %d, cols: %d\n", direction, a, b, rows, cols)
+			count++
+
+			moufTurn = !moufTurn
+		}
+
+		fmt.Println(count)
+	}
+}
