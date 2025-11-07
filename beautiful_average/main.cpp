@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long int s64; 
+
+int main(void)
+{
+	// ios::sync_with_stdio(0);
+	// cin.tie(0);
+	
+    // freopen("tests.txt", "r", stdin);
+
+	s64 testcase_count;
+	cin >> testcase_count;
+
+	for (s64 t = 0; t < testcase_count; t++)
+	{
+		int x       = 0;
+		int arr_len = 0;
+		int max_val = 0;
+
+	  	cin >> arr_len;
+
+		for (int i = 0; i < arr_len; i++)
+		{
+			cin >> x;
+			if (x > max_val)
+				max_val = x;
+		}
+
+		cout << max_val << "\n";
+	}
+}
