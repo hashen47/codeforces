@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long int s64; 
+
+int main(void)
+{
+	// ios::sync_with_stdio(0);
+	// cin.tie(0);
+	
+    // freopen("tests.txt", "r", stdin);
+
+	s64 testcase_count;
+	cin >> testcase_count;
+
+	for (s64 t = 0; t < testcase_count; t++)
+	{
+		int a, b, c, d;
+		cin >> a >> b >> c >> d;
+
+		if (a == b && b == c && c == d)
+			cout << "Yes\n";
+		else
+			cout << "No\n";
+	}
+}
